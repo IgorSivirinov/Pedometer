@@ -9,9 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service
-            android:name=".MyCountService"
-            android:exported="false"></service>
+
         <service
             android:name=".CountService"
             android:enabled="true"

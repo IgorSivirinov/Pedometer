@@ -19,8 +19,8 @@ public class CountService extends Service implements SensorEventListener{
     private float[] accelerometer;  //данные с акселерометра
     private float[] orientation;
     private float[] geomagnetism;
-   private int steps = 0;
-   private boolean was = true;
+    private int steps = 0;
+
 
     public CountService() {
     }
@@ -34,6 +34,7 @@ public class CountService extends Service implements SensorEventListener{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         sensorManager.registerListener(this, sensor,SensorManager.SENSOR_DELAY_NORMAL );
+
         return super.onStartCommand(intent, flags, startId);
     }
     @Override
@@ -41,7 +42,9 @@ public class CountService extends Service implements SensorEventListener{
         loadSensorData(event); // получаем данные с датчика
         SensorManager.getRotationMatrix(rotationMatrix, null, accelerometer,geomagnetism); //получаем матрицу поворота
         SensorManager.getOrientation(rotationMatrix, orientation);
-        if(accelerometer[0]>=30||geomagnetism[0]>=30||orientation[0]>=30) {steps++;}
+
+        if(accelerometer[0]>=10&&accelerometer[0]<=20) {steps++;}
+
     }
     public Integer getSteps(){
 
