@@ -16,7 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private boolean binded=false;
     private TextView stepsOut;
     private ProgressBar progressBar;
@@ -49,46 +49,27 @@ public class MainActivity extends AppCompatActivity {
             ibu2 = findViewById(R.id.ibu2);
             ibu.setImageResource(R.drawable.home);
             ibu2.setImageResource(R.drawable.gear);
+            ibu.setOnClickListener(this);
+            ibu2.setOnClickListener(this);
 //
 //            fragmentManager=getSupportFragmentManager();
 //            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//            FragmentHome fragment = new FragmentHome();fragmentTransaction.add(R.id.container, fragment);
+//            FragmentHome fragment = new FragmentHome();
+//            fragmentTransaction.add(R.id.container, fragment);
 //            fragmentTransaction.commit();
-//
-//
-//
-//
-//
-//        ibu.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                try {
-//                    Fragment fragment = null;
-//                    fragment = new FragmentHome();
-//                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                    fragmentTransaction.replace(R.id.container, fragment);
-//                    fragmentTransaction.commit();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        ibu2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                try {
-//                    Fragment fragment = null;
-//                    fragment = new FragmentGear();
-//                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                    fragmentTransaction.replace(R.id.container, fragment);
-//                    fragmentTransaction.commit();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//        });
-
+    }
+    @Override
+    public void onClick(View v) {
+//        Fragment fragment=null;
+//        switch (v.getId()){
+//            case R.id.ibu:
+//                fragment = new FragmentHome();break;
+//            case R.id.ibu2:
+//                fragment = new FragmentGear();break;
+//        }
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.container, fragment);
+//        fragmentTransaction.commit();
     }
 
 
@@ -101,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         try {
-                String steps0 = String.valueOf(countService.getSteps());
-                stepsOut.setText(steps0);
+                String steps = String.valueOf(countService.getSteps());
+                stepsOut.setText(steps);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -125,4 +106,5 @@ public class MainActivity extends AppCompatActivity {
             binded=false;
         }
     }
+
 }
