@@ -1,6 +1,7 @@
 package com.example.pedometer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.solver.Cache;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -18,6 +19,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private boolean binded=false;
+    private String steps;
+    private Thread thread;
     private TextView stepsOut;
     private ProgressBar progressBar;
     private CountService countService;
@@ -51,12 +54,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ibu2.setImageResource(R.drawable.gear);
             ibu.setOnClickListener(this);
             ibu2.setOnClickListener(this);
+            thread=new Thread (new AnotherRunnable());
+            thread.start();
 //
 //            fragmentManager=getSupportFragmentManager();
 //            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 //            FragmentHome fragment = new FragmentHome();
 //            fragmentTransaction.add(R.id.container, fragment);
 //            fragmentTransaction.commit();
+    }
+    class AnotherRunnable implements Runnable{
+
+        @Override
+        public void run() {
+            while(!thread.isInterrupted())
+                try{ Ti();} catch (Exception e) { e.printStackTrace(); }
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+    public void Ti(){
+            progressBar.setProgress(countService.getSteps());
+           steps = Integer.toString(countService.getSteps());
+            if (!(stepsOut.getText().equals(steps))){
+            stepsOut.setText(steps);}
+
     }
     @Override
     public void onClick(View v) {
@@ -73,22 +99,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        try {
-            progressBar.setProgress(countService.getSteps());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-                String steps = String.valueOf(countService.getSteps());
-                stepsOut.setText(steps);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-    }
 
     @Override
     protected void onStart() {
